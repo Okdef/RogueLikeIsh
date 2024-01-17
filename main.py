@@ -12,7 +12,7 @@ from entities import *
 from typing import Optional
 from actions import *
 from input_handlers import *
-from gamemap import GameMap
+from procgen import generate_dungeon
 from engine import Engine
 
 #Main 
@@ -32,8 +32,8 @@ def main() -> None:
     player = Entity(console.width //2, console.height //2, char="@", color=(255,255,255))
     npc = Entity(console.width//2 - 5, console.height//2 , "@", color = (255,255,0))
     entities = {npc,player}
-    game_map = GameMap(map_width,map_height)
-
+    game_map = generate_dungeon(map_width,map_height)
+    
     event_handler = EventHandler()
     engine = Engine(entities=entities, event_handler=event_handler, game_map=game_map, player=player)
 
