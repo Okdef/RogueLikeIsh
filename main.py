@@ -27,12 +27,26 @@ def main() -> None:
     game_active = True
     map_width = 60
     map_height = 40
+
+    #room specs:
+    room_max_size = 10
+    room_min_size = 6
+    max_rooms = 30
+
+
     tcod.tileset.procedural_block_elements(tileset=tileset)
     console = tcod.console.Console(80,50)
     player = Entity(console.width //2, console.height //2, char="@", color=(255,255,255))
     npc = Entity(console.width//2 - 5, console.height//2 , "@", color = (255,255,0))
     entities = {npc,player}
-    game_map = generate_dungeon(map_width,map_height)
+    game_map = generate_dungeon(
+        max_rooms=max_rooms,
+        room_min_size=room_min_size,
+        room_max_size=room_max_size,
+        map_width=map_width,
+        map_height=map_height,
+        player=player
+    )
     
     event_handler = EventHandler()
     engine = Engine(entities=entities, event_handler=event_handler, game_map=game_map, player=player)
