@@ -12,6 +12,8 @@ from entities import *
 from typing import Optional
 from actions import *
 from input_handlers import *
+from gamemap import GameMap
+from engine import Engine
 
 #Main 
 def main() -> None:
@@ -23,32 +25,29 @@ def main() -> None:
     res_width, res_height = 720, 480
     res_flags = tcod.context.SDL_WINDOW_RESIZABLE | tcod.context.SDL_WINDOW_MAXIMIZED
     game_active = True
+    map_width = 60
+    map_height = 40
     tcod.tileset.procedural_block_elements(tileset=tileset)
     console = tcod.console.Console(80,50)
-    player = entities.Entity(console.width //2, console.height //2, char="@", color="WHITE")
+    player = Entity(console.width //2, console.height //2, char="@", color=(255,255,255))
+    npc = Entity(console.width//2 - 5, console.height//2 , "@", color = (255,255,0))
+    entities = {npc,player}
+    game_map = GameMap(map_width,map_height)
+
     event_handler = EventHandler()
+    engine = Engine(entities=entities, event_handler=event_handler, game_map=game_map, player=player)
 
 
     with tcod.context.new(width=res_width, height=res_height, sdl_window_flags=res_flags, tileset=tileset, title="roguelikeish") as context:
         while game_active:
             console = context.new_console(order="F")
             console.clear() #clear console before drawing
-            console.print(player.x,player.y,player.char)
-            context.present(console,integer_scaling=True) #present to console
-            context.present(console) #this renders the console to the window
-            for event in tcod.event.wait(): #this waits until pending events 'exist'
-                action = event_handler.dispatch(event)
-                
-                if action is None:
-                    continue
-                    
-                if isinstance(action,MovementAction):
-                    player.x += action.dx
-                    player.y += action.dy
-                
-                elif isinstance(action,EscapeAction):
-                    raise SystemExit()
-
+            engine.render(console=console,context=context)
+            events=tcod.event.wait()
+            engine.handle_events(events)
+            #context.present(console,integer_scaling=True) #present to console
+            #context.present(console) #this renders the console to the window
+            
 
 if __name__ == "__main__":
     main()
