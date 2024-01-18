@@ -8,12 +8,13 @@ import tcod.tileset#tileset manager
 import tcod.event
 import tcod.console
 import attrs #this is like datatypes
-from entities import *
 from typing import Optional
 from actions import *
 from input_handlers import *
 from procgen import generate_dungeon
 from engine import Engine
+import copy
+import entity_factories
 
 #Main 
 def main() -> None:
@@ -32,24 +33,25 @@ def main() -> None:
     room_max_size = 10
     room_min_size = 6
     max_rooms = 30
+    max_monsters_per_room = 2
 
 
     tcod.tileset.procedural_block_elements(tileset=tileset)
     console = tcod.console.Console(80,50)
-    player = Entity(console.width //2, console.height //2, char="@", color=(255,255,255))
-    npc = Entity(console.width//2 - 5, console.height//2 , "@", color = (255,255,0))
-    entities = {npc,player}
+    player = copy.deepcopy(entity_factories.player)
+
     game_map = generate_dungeon(
         max_rooms=max_rooms,
         room_min_size=room_min_size,
         room_max_size=room_max_size,
         map_width=map_width,
         map_height=map_height,
+        max_monsters_per_room=max_monsters_per_room,
         player=player
     )
     
     event_handler = EventHandler()
-    engine = Engine(entities=entities, event_handler=event_handler, game_map=game_map, player=player)
+    engine = Engine(event_handler=event_handler, game_map=game_map, player=player)
 
 
     with tcod.context.new(width=res_width, height=res_height, sdl_window_flags=res_flags, tileset=tileset, title="roguelikeish") as context:

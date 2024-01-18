@@ -1,5 +1,5 @@
 #Engine.py
-from typing import Set,Iterable,Any
+from typing import Iterable,Any
 import attrs
 from tcod.context import Context
 from tcod.console import Console
@@ -14,7 +14,6 @@ from input_handlers import EventHandler
 
 @attrs.define
 class Engine:
-    entities : set[Entity]
     event_handler : EventHandler
     game_map : GameMap
     player : Entity
@@ -45,9 +44,7 @@ class Engine:
     def render(self,console:Console,context:Context):
         self.game_map.render(console)
 
-        for entity in self.entities:
-            if self.game_map.visible[entity.x, entity.y]:
-                console.print(entity.x, entity.y, entity.char,fg = entity.color)
+        
 
         context.present(console)
         console.clear()

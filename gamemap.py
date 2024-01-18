@@ -1,15 +1,21 @@
 #gamemap class
+from __future__ import annotations
+from typing import Iterable, TYPE_CHECKING
+
 import numpy as np
 import attrs
 from tcod.console import Console
 import tile_types
 
+if TYPE_CHECKING:
+    from entities import Entity
 
 class GameMap:
     width : int
-    def __init__(self,width:int,height:int):
+    def __init__(self,width:int,height:int, entities: Iterable[Entity] = ()):
         self.width = width 
         self.height = height
+        self.entities = set(entities)
         self.tiles = np.full((width, height) , fill_value=tile_types.wall, order="F")
         
         self.visible = np.full((width,height), fill_value=False, order="F") #Currently Visible Tiles
@@ -26,3 +32,7 @@ class GameMap:
             choicelist=[self.tiles["light"],self.tiles["dark"]],
             default=tile_types.SHROUD
         )
+
+        for entity in self.entities: 
+            if self.visible[entity.x, entity.y]:
+                console.print(x=entity.x, y=entity.y, string = entity.char, fg = entity.color)
