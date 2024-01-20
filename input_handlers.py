@@ -2,7 +2,7 @@
 from typing import Optional
 import attrs
 import tcod.event
-from actions import Action, EscapeAction, MovementAction
+from actions import Action, BumpAction, EscapeAction
 
 @attrs.define 
 class EventHandler(tcod.event.EventDispatch[Action]):
@@ -17,13 +17,13 @@ class EventHandler(tcod.event.EventDispatch[Action]):
 
         match key:
             case tcod.event.K_UP:
-                action = MovementAction(dx = 0, dy = -1)
+                action = BumpAction(dx = 0, dy = -1)
             case tcod.event.K_DOWN:
-                action = MovementAction(dx = 0, dy = 1)
+                action = BumpAction(dx = 0, dy = 1)
             case tcod.event.K_LEFT:
-                action = MovementAction(dx = -1, dy = 0)
+                action = BumpAction(dx = -1, dy = 0)
             case tcod.event.K_RIGHT:
-                action = MovementAction(dx = 1, dy = 0)
+                action = BumpAction(dx = 1, dy = 0)
 
             case tcod.event.K_ESCAPE: #EscapeAction
                 action = EscapeAction()

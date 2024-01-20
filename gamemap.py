@@ -21,6 +21,13 @@ class GameMap:
         self.visible = np.full((width,height), fill_value=False, order="F") #Currently Visible Tiles
         self.explored = np.full((width,height), fill_value=False, order="F") #Explored Tiles
 
+    def get_blocking_entity_at_location(self, location_x: int, location_y:int):
+        for entity in self.entities:
+            if entity.blocks_movement and entity.x ==location_x and entity.y == location_y:
+                return entity
+        return None
+
+
 
     def in_bounds(self, x:int, y:int) -> bool:
         #returns true of x,y are inside map bounds
