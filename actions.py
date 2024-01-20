@@ -4,6 +4,7 @@ import attrs
 from typing import TYPE_CHECKING
 import entities
 
+
 if TYPE_CHECKING:
     from engine import Engine
     from entities import Entity
@@ -30,15 +31,14 @@ class ActionWithDirection:
         self.dy = dy
 
 
-class MeleeAction(ActionWithDirection):
+class MeleeAction(ActionWithDirection):#This function finds the target in the movement direction and if it is a valid target calls the damage function
     def perform(self,engine:Engine, entity:Entity) -> None:
         dest_x = entity.x + self.dx
         dest_y = entity.y + self.dy
         target = engine.game_map.get_blocking_entity_at_location(dest_x, dest_y)
         if not target:
             return
-        
-        print(f"You kick the {target.name}, much to its annoyance!")
+        entity.damage(target, 1)
 
 def perform(self, engine:Engine, entity:Entity) -> None:
     raise NotImplementedError()    
@@ -70,3 +70,7 @@ class BumpAction(ActionWithDirection):
 
         else:
             return MovementAction(self.dx,self.dy).perform(engine,entity)
+
+
+
+        

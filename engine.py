@@ -43,8 +43,5 @@ class Engine:
 
     def render(self,console:Console,context:Context):
         self.game_map.render(console)
-
-
-
         context.present(console)
         console.clear()

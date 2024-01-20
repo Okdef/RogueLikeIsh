@@ -24,6 +24,8 @@ class EventHandler(tcod.event.EventDispatch[Action]):
                 action = BumpAction(dx = -1, dy = 0)
             case tcod.event.K_RIGHT:
                 action = BumpAction(dx = 1, dy = 0)
+            case tcod.event.K_i:
+                action = OpenMenu()
 
             case tcod.event.K_ESCAPE: #EscapeAction
                 action = EscapeAction()
