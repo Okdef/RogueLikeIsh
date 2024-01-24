@@ -25,6 +25,7 @@ class Entity:
         blocks_movement: bool = False,
         hp_most: int = 0, #these are used for the hp pool generation, not used in gameplay
         hp_least: int = 0,
+        action_max: int = 3
     ):
         self.x = x 
         self.y = y
@@ -36,6 +37,9 @@ class Entity:
         self.hp_least = hp_least
         self.hp_current = 0
         self.map = None
+        self.action_max = action_max
+        self.action_pool = self.action_max
+
         
         
 

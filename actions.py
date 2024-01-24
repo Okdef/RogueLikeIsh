@@ -39,6 +39,8 @@ class MeleeAction(ActionWithDirection):#This function finds the target in the mo
         if not target:
             return
         entity.damage(target, 1)
+        engine.turncontroller.action_check(entity)
+        print(entity.action_pool)
 
 def perform(self, engine:Engine, entity:Entity) -> None:
     raise NotImplementedError()    
@@ -58,6 +60,9 @@ class MovementAction(ActionWithDirection):
             return#
 
         entity.move(self.dx,self.dy)
+        engine.turncontroller.action_check(entity)
+        print(entity.action_pool)
+
 
 
 class BumpAction(ActionWithDirection):

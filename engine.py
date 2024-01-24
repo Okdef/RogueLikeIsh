@@ -10,17 +10,17 @@ from input_handlers import EventHandler
 from entities import Entity
 from gamemap import GameMap
 from input_handlers import EventHandler
-
+from turn_controller import TurnController
 
 @attrs.define
 class Engine:
     event_handler : EventHandler
     game_map : GameMap
     player : Entity
-    
+    turncontroller : TurnController
+
     def __attrs_post_init__(self):
-        self.update_fov()
-        
+        self.update_fov()        
     
 
     def handle_events(self, events:Iterable[Any]) ->None:
