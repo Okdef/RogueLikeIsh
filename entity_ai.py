@@ -10,7 +10,7 @@ from gamemap import GameMap
 from tcod.map import compute_fov
 import tcod
 from entities import Entity
-
+from tcod import *
 
 if TYPE_CHECKING:
     from engine import Engine
@@ -23,11 +23,17 @@ class AIController:
     def enemy_turn(self):
         enemy_list = self.gamemap.entities
         for entity in enemy_list:
-            print(self.enemy_fov_check(entity))
+            in_fov = self.enemy_fov_check(entity)
+            if in_fov is not None:
+                graph = tcod.path.SimpleGraph(cost=self.gamemap.cost_map, cardinal=1, diagonal=1)
+                pathfinder = tcod.path.Pathfinder(graph)
+                pathfinder.add_root((entity.x,entity.y))
+                pathfinder.resolve()
+                path_to_target = pathfinder.path_to(in_fov).tolist()
+                print(path_to_target)
 
-        
 
-    def enemy_fov_check(self,entity):
+    def enemy_fov_check(self,entity):#returns playerx,playery or None
         enemy_fov = compute_fov(
             self.gamemap.tiles["transparent"],
             (entity.x, entity.y),
@@ -38,3 +44,5 @@ class AIController:
             return self.player.x, self.player.y
         else:
             return None
+
+    
