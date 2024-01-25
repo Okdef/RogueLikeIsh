@@ -15,7 +15,6 @@ from procgen import generate_dungeon
 from engine import Engine
 import copy
 import entity_factories
-from turn_controller import TurnController
 
 
 #Main 
@@ -41,7 +40,6 @@ def main() -> None:
     tcod.tileset.procedural_block_elements(tileset=tileset)
     console = tcod.console.Console(80,50)
     player = copy.deepcopy(entity_factories.player)
-    turncontroller = TurnController()
 
     game_map = generate_dungeon(
         max_rooms=max_rooms,
@@ -54,7 +52,7 @@ def main() -> None:
     )
     
     event_handler = EventHandler()
-    engine = Engine(event_handler=event_handler, game_map=game_map, player=player, turncontroller=turncontroller)
+    engine = Engine(event_handler=event_handler, game_map=game_map, player=player)
 
 
     with tcod.context.new(width=res_width, height=res_height, sdl_window_flags=res_flags, tileset=tileset, title="roguelikeish") as context:

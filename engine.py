@@ -11,16 +11,22 @@ from entities import Entity
 from gamemap import GameMap
 from input_handlers import EventHandler
 from turn_controller import TurnController
+from entity_ai import AIController
+from gamemap import GameMap
 
 @attrs.define
 class Engine:
     event_handler : EventHandler
     game_map : GameMap
     player : Entity
-    turncontroller : TurnController
+    aicontroller : AIController = None
+    turncontroller : TurnController = None
 
     def __attrs_post_init__(self):
-        self.update_fov()        
+        self.aicontroller = AIController(gamemap = self.game_map) if self.aicontroller is None else self.aicontroller
+        self.turncontroller = TurnController(aicontroller = self.aicontroller) if self.turncontroller is None else self.turncontroller
+        self.update_fov()
+
     
 
     def handle_events(self, events:Iterable[Any]) ->None:
