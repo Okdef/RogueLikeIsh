@@ -7,6 +7,9 @@
 import attrs
 from typing import TYPE_CHECKING
 from gamemap import GameMap
+from tcod.map import compute_fov
+import tcod
+from entities import Entity
 
 
 if TYPE_CHECKING:
@@ -15,8 +18,23 @@ if TYPE_CHECKING:
 @attrs.define
 class AIController:
     gamemap : GameMap
+    player : Entity
     
     def enemy_turn(self):
         enemy_list = self.gamemap.entities
         for entity in enemy_list:
-            print(entity)
+            print(self.enemy_fov_check(entity))
+
+        
+
+    def enemy_fov_check(self,entity):
+        enemy_fov = compute_fov(
+            self.gamemap.tiles["transparent"],
+            (entity.x, entity.y),
+            radius = 8,
+            algorithm=tcod.FOV_BASIC
+        )
+        if enemy_fov[self.player.x, self.player.y]:
+            return self.player.x, self.player.y
+        else:
+            return None

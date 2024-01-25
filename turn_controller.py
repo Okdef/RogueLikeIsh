@@ -15,6 +15,10 @@ class TurnController:
     
 
     def action_check(self, entity: Entity, cost:int = 1):
+        ##TEMPORARY
+        self.aicontroller.enemy_turn()
+        ##TEMPORARY
+
         entity.action_pool -= cost
         print(entity.action_pool)
         if entity.action_pool == 0:

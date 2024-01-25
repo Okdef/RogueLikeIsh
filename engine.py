@@ -23,7 +23,7 @@ class Engine:
     turncontroller : TurnController = None
 
     def __attrs_post_init__(self):
-        self.aicontroller = AIController(gamemap = self.game_map) if self.aicontroller is None else self.aicontroller
+        self.aicontroller = AIController(gamemap = self.game_map,player = self.player) if self.aicontroller is None else self.aicontroller
         self.turncontroller = TurnController(aicontroller = self.aicontroller) if self.turncontroller is None else self.turncontroller
         self.update_fov()
 
