@@ -32,3 +32,5 @@ class EventHandler(tcod.event.EventDispatch[Action]):
 
             #if none pressed
         return action
+
+    

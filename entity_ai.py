@@ -11,6 +11,8 @@ from tcod.map import compute_fov
 import tcod
 from entities import Entity
 from tcod import *
+from time import sleep
+from tcod.console import Console
 
 if TYPE_CHECKING:
     from engine import Engine
@@ -30,7 +32,8 @@ class AIController:
                 pathfinder.add_root((entity.x,entity.y))
                 pathfinder.resolve()
                 path_to_target = pathfinder.path_to(in_fov).tolist()
-                print(path_to_target)
+                #print(path_to_target)
+                self.enemy_move(entity, path_to_target,self.gamemap)
 
 
     def enemy_fov_check(self,entity):#returns playerx,playery or None
@@ -45,4 +48,13 @@ class AIController:
         else:
             return None
 
-    
+    def enemy_move(self,entity, path_to_target,gamemap)->None:
+        if len(path_to_target) > 1:
+            while entity.action_pool > 0 and len(path_to_target) > 1:
+                path_to_target.pop(0)
+                print(path_to_target)
+                entity.x , entity.y = path_to_target[0][0], path_to_target[0][1] 
+                entity.action_pool -= 1
+                #try to create an event here
+                
+                sleep(0.5)
