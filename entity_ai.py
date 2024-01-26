@@ -30,13 +30,15 @@ class AIController:
         for entity in enemy_list:
             in_fov = self.enemy_fov_check(entity)
             if in_fov is not None:
-                graph = tcod.path.SimpleGraph(cost=self.gamemap.cost_map, cardinal=1, diagonal=1)
+                entity.action_pool = entity.action_max
+                graph = tcod.path.SimpleGraph(cost=self.gamemap.cost_map, cardinal=1, diagonal=0)
                 pathfinder = tcod.path.Pathfinder(graph)
                 pathfinder.add_root((entity.x,entity.y))
                 pathfinder.resolve()
                 path_to_target = pathfinder.path_to(in_fov).tolist()
                 #print(path_to_target)
                 self.enemy_move(entity, path_to_target,self.gamemap)
+        
 
 
     def enemy_fov_check(self,entity):#returns playerx,playery or None
@@ -53,7 +55,7 @@ class AIController:
 
     def enemy_move(self,entity, path_to_target,gamemap)->None:
         if len(path_to_target) > 1:
-            while entity.action_pool > 0 and len(path_to_target) > 1:
+            while entity.action_pool > 0 and len(path_to_target) > 2:
                 path_to_target.pop(0)
                 print(path_to_target)
                 entity.x , entity.y = path_to_target[0][0], path_to_target[0][1] 
