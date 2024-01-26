@@ -56,14 +56,22 @@ def main() -> None:
 
 
     with tcod.context.new(width=res_width, height=res_height, sdl_window_flags=res_flags, tileset=tileset, title="roguelikeish") as context:
+        if engine.renderer.context is None:
+            engine.renderer.context = context
         while game_active:
             console = context.new_console(order="F")
             console.clear() #clear console before drawing
-            engine.render(console=console,context=context)
+            engine.renderer.console = console
+            #engine.render(console=console,context=context)
+            
+        
+
+            engine.renderer.fullmap_render()
             events=tcod.event.wait()
             engine.handle_events(events)
-            #context.present(console,integer_scaling=True) #present to console
-            #context.present(console) #this renders the console to the window
+            context.present(console,integer_scaling=True) #present to console
+            context.present(console) #this renders the console to the window
+            
             
 
 if __name__ == "__main__":

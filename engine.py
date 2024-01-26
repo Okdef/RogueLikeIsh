@@ -13,6 +13,7 @@ from input_handlers import EventHandler
 from turn_controller import TurnController
 from entity_ai import AIController
 from gamemap import GameMap
+from renderer import Renderer
 
 @attrs.define
 class Engine:
@@ -21,12 +22,15 @@ class Engine:
     player : Entity
     aicontroller : AIController = None
     turncontroller : TurnController = None
+    renderer : Renderer = None
 
     def __attrs_post_init__(self):
+        self.renderer = Renderer(self.game_map)
         self.aicontroller = AIController(gamemap = self.game_map,player = self.player) if self.aicontroller is None else self.aicontroller
+        self.aicontroller.renderer = self.renderer
         self.turncontroller = TurnController(aicontroller = self.aicontroller) if self.turncontroller is None else self.turncontroller
         self.update_fov()
-
+        
     
 
     def handle_events(self, events:Iterable[Any]) ->None:
@@ -47,7 +51,9 @@ class Engine:
         )
         self.game_map.explored |= self.game_map.visible
 
-    def render(self,console:Console,context:Context):
-        self.game_map.render(console)
-        context.present(console)
-        console.clear()
+      #def render(self,console:Console,context:Context):
+        #self.game_map.render(console)
+        #context.present(console)
+        #console.clear()
+ 
+    

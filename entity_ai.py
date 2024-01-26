@@ -13,6 +13,7 @@ from entities import Entity
 from tcod import *
 from time import sleep
 from tcod.console import Console
+from renderer import Renderer
 
 if TYPE_CHECKING:
     from engine import Engine
@@ -21,6 +22,8 @@ if TYPE_CHECKING:
 class AIController:
     gamemap : GameMap
     player : Entity
+    renderer : Renderer = None
+
     
     def enemy_turn(self):
         enemy_list = self.gamemap.entities
@@ -50,11 +53,11 @@ class AIController:
 
     def enemy_move(self,entity, path_to_target,gamemap)->None:
         if len(path_to_target) > 1:
-            while entity.action_pool > 0 and len(path_to_target) > 1:
+            while entity.action_pool > 0 and len(path_to_target) > 2:
                 path_to_target.pop(0)
                 print(path_to_target)
                 entity.x , entity.y = path_to_target[0][0], path_to_target[0][1] 
                 entity.action_pool -= 1
                 #try to create an event here
-                
+                self.renderer.fullmap_render()
                 sleep(0.5)
