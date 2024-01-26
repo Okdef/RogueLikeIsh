@@ -53,11 +53,11 @@ class AIController:
 
     def enemy_move(self,entity, path_to_target,gamemap)->None:
         if len(path_to_target) > 1:
-            while entity.action_pool > 0 and len(path_to_target) > 2:
+            while entity.action_pool > 0 and len(path_to_target) > 1:
                 path_to_target.pop(0)
                 print(path_to_target)
                 entity.x , entity.y = path_to_target[0][0], path_to_target[0][1] 
                 entity.action_pool -= 1
                 #try to create an event here
                 self.renderer.fullmap_render()
-                sleep(0.5)
+                sleep(5/len(gamemap.entities))
