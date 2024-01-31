@@ -62,4 +62,5 @@ class AIController:
                 entity.action_pool -= 1
                 #try to create an event here
                 self.renderer.fullmap_render()
+                print("rendering_move")
                 sleep(5/len(gamemap.entities))

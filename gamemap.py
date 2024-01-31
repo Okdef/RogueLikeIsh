@@ -23,6 +23,26 @@ class GameMap:
 
         self.cost_map = np.full((width, height), fill_value=1, order="F")
 
+
+    def init_cost_map(self):
+        for x in range(self.width):
+            for y in range(self.height):
+                self.cost_map[x,y] = self.tiles[x,y]["cost"]
+                if self.cost_map[x,y] == 1:
+                    print("xy is 1")
+                elif self.cost_map[x,y] == 0:
+                    print ("xy is 0")
+
+#################################################WIP###########
+    def get_cost_map(self,moving_entity):
+        current_cost_map = self.cost_map.copy()
+        for entity in self.entities:
+            if entity != moving_entity:
+               current_cost_map[entity.x,entity.y] = 0
+        return current_cost_map
+################################################WIP/########
+
+
     def get_blocking_entity_at_location(self, location_x: int, location_y:int):
         for entity in self.entities:
             if entity.blocks_movement and entity.x ==location_x and entity.y == location_y:

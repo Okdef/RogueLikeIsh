@@ -25,6 +25,7 @@ class Engine:
     renderer : Renderer = None
 
     def __attrs_post_init__(self):
+        self.game_map.init_cost_map()
         self.renderer = Renderer(self.game_map)
         self.aicontroller = AIController(gamemap = self.game_map,player = self.player) if self.aicontroller is None else self.aicontroller
         self.aicontroller.renderer = self.renderer
