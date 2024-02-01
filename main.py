@@ -1,4 +1,4 @@
-#Main thod Roguelikeish Project by Okdef Started 1/11/2024
+#Main method Roguelikeish Project by Okdef Started 1/11/2024
 #This project is a roguelike game built in python using libtcod python
 # Library Documentation: https://python-tcod.readthedocs.io/en/latest/
 
@@ -60,7 +60,7 @@ def main() -> None:
             engine.renderer.context = context
         while game_active:
             console = context.new_console(order="F")
-            console.clear() #clear console before drawing
+            #console.clear() #clear console before drawing
             engine.renderer.console = console
             #engine.render(console=console,context=context)
             

@@ -1,11 +1,7 @@
 #This manages the inventory and presentation of the inventory
-import numpy as np
-
 class Inventory:
     def __init__(self):
         self.bag = []
-
-
     
     def add_item(self,item):
         self.bag.append(item)
