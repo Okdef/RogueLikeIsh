@@ -30,7 +30,6 @@ class ActionWithDirection:
         self.dx = dx
         self.dy = dy
 
-
 class MeleeAction(ActionWithDirection):#This function finds the target in the movement direction and if it is a valid target calls the damage function
     def perform(self,engine:Engine, entity:Entity) -> None:
         dest_x = entity.x + self.dx
@@ -74,23 +73,20 @@ class BumpAction(ActionWithDirection):
         else:
             return MovementAction(self.dx,self.dy).perform(engine,entity)
 
-@attrs.define
-class MenuMove(Action):
-    def __init__(self):
-        self.selection = 0  # Initialize the selection to 0
-
-    def perform(self, engine: Engine, direction: int = 0) -> None:
-        self.selection += direction
-        print(f"MenuMove: Selection moved to {self.selection}")
+class MenuMove(ActionWithDirection):
+    def perform(self, engine: Engine, entity:Entity) -> None:
+        print(f"MenuMove: Selection moved to NULL")
 
 @attrs.define
 class OpenMenu(Action):
     def perform(self, engine: Engine,entity:Entity) -> None:
         print("OpenMenu: Menu opened")
+        engine.renderer.render_toggle_inventory()
         # Add your menu opening logic here
 
 
 @attrs.define
 class CloseMenu(Action):
     def perform(self, engine:Engine,entity:Entity) -> None:
+        engine.renderer.render_toggle_inventory()
         print("CloseMenu: Menu closed")

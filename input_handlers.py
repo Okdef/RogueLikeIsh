@@ -39,9 +39,9 @@ class EventHandler(tcod.event.EventDispatch[Action]):
         elif self.turn_controller.control_mode == 3:#inventory_controls
             match key:
                 case tcod.event.K_UP:
-                    action = Menu_Move(direction = 1)
+                    action = MenuMove(dx = 0, dy = 1)
                 case tcod.event.K_DOWN:
-                    action = MenuMove(direction = -1)
+                    action = MenuMove(dx = 0, dy = -1)
                 case tcod.event.K_i:
                     self.turn_controller.control_mode = 1
                     action = CloseMenu()

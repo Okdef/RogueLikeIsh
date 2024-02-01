@@ -27,10 +27,12 @@ class Engine:
     def __attrs_post_init__(self):
         self.game_map.init_cost_map()
         self.renderer = Renderer(self.game_map)
+        self.renderer.player = self.player
         self.aicontroller = AIController(gamemap = self.game_map,player = self.player) if self.aicontroller is None else self.aicontroller
         self.aicontroller.renderer = self.renderer
         self.turncontroller = TurnController(aicontroller = self.aicontroller , player=self.player) if self.turncontroller is None else self.turncontroller
         self.event_handler.turn_controller = self.turncontroller
+        self.player.hp_current = self.player.hp_most
         self.update_fov()
         
     

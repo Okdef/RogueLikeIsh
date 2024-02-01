@@ -28,10 +28,6 @@ class GameMap:
         for x in range(self.width):
             for y in range(self.height):
                 self.cost_map[x,y] = self.tiles[x,y]["cost"]
-                if self.cost_map[x,y] == 1:
-                    print("xy is 1")
-                elif self.cost_map[x,y] == 0:
-                    print ("xy is 0")
 
 #################################################WIP###########
     def get_cost_map(self,moving_entity):
