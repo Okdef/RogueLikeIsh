@@ -63,7 +63,7 @@ class Entity:
     def damage(self, target:Entity, damage=0):
         if target.hp_current > 0:
             target.hp_current -= damage
-            print(f"You kick the {target.name}, much to its annoyance! {target.hp_current}")
+            print(f"{self.name} attacks dealing {damage} damage to {target.name}")
             if target.hp_current <= 0:
                 target.death()
     

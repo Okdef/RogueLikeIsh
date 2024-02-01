@@ -30,6 +30,8 @@ class GameMap:
                 self.cost_map[x,y] = self.tiles[x,y]["cost"]
 
 #################################################WIP###########
+                #I think the issue here is that I need to deep or np copy the original costmap and then assign entity tiles with the value. 
+                #I wasn't copying correctly before and it was acting strangely as a result. Might fix later if I have time
     def get_cost_map(self,moving_entity):
         current_cost_map = self.cost_map.copy()
         for entity in self.entities:

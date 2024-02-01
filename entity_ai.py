@@ -61,3 +61,9 @@ class AIController:
                 #try to create an event here
                 self.renderer.fullmap_render()
                 sleep(5/len(gamemap.entities))
+            if len(path_to_target) == 2:
+                self.enemy_attack(entity)
+                print("attacking!!!")
+
+    def enemy_attack(self,entity):
+        entity.damage(self.player,1)
