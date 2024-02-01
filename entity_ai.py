@@ -36,7 +36,6 @@ class AIController:
                 pathfinder.add_root((entity.x,entity.y))
                 pathfinder.resolve()
                 path_to_target = pathfinder.path_to(in_fov).tolist()
-                #print(path_to_target)
                 self.enemy_move(entity, path_to_target,self.gamemap)
         
 
@@ -57,10 +56,8 @@ class AIController:
         if len(path_to_target) > 1:
             while entity.action_pool > 0 and len(path_to_target) > 2:
                 path_to_target.pop(0)
-                print(path_to_target)
                 entity.x , entity.y = path_to_target[0][0], path_to_target[0][1] 
                 entity.action_pool -= 1
                 #try to create an event here
                 self.renderer.fullmap_render()
-                print("rendering_move")
                 sleep(5/len(gamemap.entities))

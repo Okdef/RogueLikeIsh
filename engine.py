@@ -30,6 +30,7 @@ class Engine:
         self.aicontroller = AIController(gamemap = self.game_map,player = self.player) if self.aicontroller is None else self.aicontroller
         self.aicontroller.renderer = self.renderer
         self.turncontroller = TurnController(aicontroller = self.aicontroller , player=self.player) if self.turncontroller is None else self.turncontroller
+        self.event_handler.turn_controller = self.turncontroller
         self.update_fov()
         
     

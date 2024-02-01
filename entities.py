@@ -8,6 +8,7 @@ import tcod.context
 import tcod.event
 import tcod.tileset
 from random import randrange
+from inventory import Inventory
 
 if TYPE_CHECKING:
     from gamemap import GameMap
@@ -25,7 +26,8 @@ class Entity:
         blocks_movement: bool = False,
         hp_most: int = 0, #these are used for the hp pool generation, not used in gameplay
         hp_least: int = 0,
-        action_max: int = 3
+        action_max: int = 3,
+        bag : Inventory = []
     ):
         self.x = x 
         self.y = y

@@ -25,7 +25,7 @@ class TurnController:
         ##TEMPORARY
 
         entity.action_pool -= cost
-        print(entity.action_pool)
+        #print(entity.action_pool)
         if entity.action_pool == 0:
             self.next_turn()
         return
@@ -37,3 +37,9 @@ class TurnController:
             self.control_mode = 1
             self.player.action_pool = self.player.action_max
         return
+
+    def get_control_mode(self) -> None:
+        return self.control_mode
+
+    def set_control_mode(self,value:int) -> None:
+        self.control_mode = value

@@ -74,6 +74,23 @@ class BumpAction(ActionWithDirection):
         else:
             return MovementAction(self.dx,self.dy).perform(engine,entity)
 
+@attrs.define
+class MenuMove(Action):
+    def __init__(self):
+        self.selection = 0  # Initialize the selection to 0
+
+    def perform(self, engine: Engine, direction: int = 0) -> None:
+        self.selection += direction
+        print(f"MenuMove: Selection moved to {self.selection}")
+
+@attrs.define
+class OpenMenu(Action):
+    def perform(self, engine: Engine,entity:Entity) -> None:
+        print("OpenMenu: Menu opened")
+        # Add your menu opening logic here
 
 
-        
+@attrs.define
+class CloseMenu(Action):
+    def perform(self, engine:Engine,entity:Entity) -> None:
+        print("CloseMenu: Menu closed")
