@@ -49,5 +49,8 @@ class Renderer:
 
 
     def inventory_render(self):
-        self.console.print_box(0,20,8,20,"teststring",fg = [255,255,255])
+        bag_string = ""
+        for i in self.player.bag:
+            bag_string += f"{i.name}\n"
+        self.console.print_box(0,20,8,20,bag_string,fg = [255,255,255])
         

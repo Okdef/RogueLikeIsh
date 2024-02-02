@@ -41,6 +41,7 @@ class Entity:
         self.map = None
         self.action_max = action_max
         self.action_pool = self.action_max
+        self.bag = bag
 
         
         
