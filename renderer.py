@@ -25,7 +25,6 @@ class Renderer:
         #game_map_render()
         pass
 
-
     def fullmap_render(self):
         self.game_map.render(self.console)
         if self.inventory_render_status == True:
